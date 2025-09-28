@@ -1,0 +1,34 @@
+# Copyright (C) 2025 Peter L Jones
+blueprint:
+  name: Aggregate Humidity Sensor State Change Trigger
+  description: >
+    Triggers on any change of state for the aggregate humidity sensor, passing the new state value
+    as a variable for use in actions (e.g., starting timers when humidity drops).
+  domain: automation
+  input:
+    aggregate_humidity_sensor:
+      name: Aggregate Humidity Sensor
+      description: The custom aggregate humidity sensor entity.
+      selector:
+        entity:
+          domain: sensor
+    actions:
+      name: Actions
+      description: Actions to run (new state is available as 'new_state').
+      selector:
+        action: {}
+
+trigger:
+  - platform: state
+    entity_id: !input aggregate_humidity_sensor
+
+variables:
+  new_state: "{{ trigger.to_state.state }}"
+  old_state: "{{ trigger.from_state.state }}"
+  over_threshold_sensors: "{{ trigger.to_state.attributes.over_threshold_sensors }}"
+
+action:
+  - choose: []
+    default: !input actions
+
+mode: single

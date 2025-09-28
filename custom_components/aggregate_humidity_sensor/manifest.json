@@ -1,0 +1,10 @@
+{
+  "domain": "aggregate_humidity_sensor",
+  "name": "Aggregate Humidity Sensor",
+  "version": "1.0.0",
+  "documentation": "https://github.com/pljones/homeassistant-aggregate-humidity-sensor",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": ["@pljones"],
+  "iot_class": "local_polling"
+}

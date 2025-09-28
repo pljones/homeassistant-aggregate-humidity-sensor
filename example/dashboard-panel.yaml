@@ -1,0 +1,32 @@
+# This example HA Dashboard Panel by Peter L Jones is marked CC0 1.0.
+# To view a copy of this mark, visit https://creativecommons.org/publicdomain/zero/1.0/ 
+type: vertical-stack
+cards:
+  - type: custom:auto-entities
+    card:
+      type: entities
+      title: Humidity Sensors (Sorted)
+    filter:
+      template: |
+        {% for e in state_attr('sensor.aggregate_humidity_sensor', 'matching_sensors') %}
+          {{ e }}
+        {% endfor %}
+    sort:
+      method: attribute
+      attribute: state
+      numeric: true
+      reverse: true
+    show_empty: false
+
+  - type: custom:button-card
+    entity: sensor.aggregate_humidity_sensor
+    name: Humidity
+    icon: mdi:water-percent
+    state:
+      - value: "on"
+        color: red
+      - value: "off"
+        color: auto
+    tap_action:
+      action: navigate
+      navigation_path: /lovelace/0  # Change as needed
